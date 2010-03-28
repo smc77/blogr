@@ -1,29 +1,223 @@
+% setwd("C:\\R\\blogR\\trunk\\blogR\\inst\\examples\\")
 %\VignetteIndexEntry{blogR: R for blogs}
 \documentclass[a4paper]{article}
 \usepackage[OT1]{fontenc}
 \usepackage{Sweave}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
 \begin{document}
 
 \title{blogR: R for blogs}
 \author{Shane M. Conway}
-\date{October 10, 2009}
+\date{December 13, 2009}
 
 \maketitle
 
-\tableofcontents
+\abstract{{\tt blogR} is an R package to provide a standardized framework for online reproducible research through blogs.
+It aims to both simplify the blogging process for R users, while simultaneously improving the quality.  The primary 
+input format for {\tt blogR} is a Sweave document, which should ultimately allow R researchers to publish their papers in multiple 
+different formats and reuse existing writing.  
+} 
+
+%\newpage
+
+%\tableofcontents
+
+%\newpage
 
 \section{Introduction}
 
-The statistical language {\tt R}~\cite{R} offers several packages for report writing, including {\tt Sweave}~\cite{Sweave} and {\tt brew}~\cite{brew}.
+The statistical language {\tt R}~\cite{R} has become the de-facto standard for statistical computing.  {\tt R} currently offers several packages for report writing, including {\tt Sweave}~\cite{Sweave} and {\tt brew}~\cite{brew}.
 Many R users also post reports using blogs.  
+
+According to wikipedia:
+\begin{quotation}
+The term "weblog" was coined by Jorn Barger on 17 December 1997. The short form, "blog," was coined by Peter Merholz, who jokingly broke the word weblog into the phrase we blog in the sidebar of his blog Peterme.com in April or May 1999.
+\end{quotation}
+
+There are many different blog platforms available.  Of the top 100 blogs, Wordpress and Moveable Type combined cover 60\%. 
+
+The goal of {\tt blogR} is to make blogging with R easier and better.  By lowering the transaction costs in blogging, {\tt blogR} should both increase the number and quality of R blogs.
+At present, most R bloggers are either developing their own workflow or else are forced to follow several steps for each post: write the post in the blogging engine, 
+create all R graphics, upload each graphic individually, and incorporate all media into the post.  This can be a very time consuming process, and hence provides little 
+incentive for people to make regular updates.
+
+Another goal for the {\tt blogR} package is reusability.  By using \texttt{Sweave} as the primary document, the hope is to allow researchers to take existing latex papers and post them online as hypertext documents.     
 
 {\tt blogR} currently supports posting R results to Wordpress, with plans to ultimately support other blog engines including Google's Blogger.
 
+\subsection{R Blogs}
+
+There are many active blogs that currently employ R for data analysis.
+
+<<label=tab1,echo=FALSE,results=tex>>=
+blog.list <- data.frame(c("Antrhospace", "Biogistic Reflections", "Cengel's Favorite Links from Diigo", "Cerebral Mastications", "Dataninja", 
+				"FOSS Trading", "Getting Genetics Done", "Gregor Gorjanc", "Jeromy Anglim's Blog", "John Myles White: Die Sudelbücher", "LearnR", "neilkodner.com", 
+				"One R Tip A Day", "Please Scoop Me!", "Quantivity", "R-statistics blog", "Realizations in Biostatistics", 
+				"Romain Francois, Professional R Enthusiast", "simon jackman's blog", "The Endeavour", 
+				"REvolutions", "Thinking inside the box", "Statistical Modeling, Causal Inference, and Social Science", "'R' you ready?", "Stats raving mad", "Wine PhD"), 
+		c("http://www.stanford.edu/~cengel/cgi-bin/anthrospace", "http://blogisticreflections.wordpress.com",
+				"http://www.diigo.com/user/Cengel", "http://www.cerebralmastication.com/", "http://dataninja.wordpress.com", 
+				"http://blog.fosstrading.com/", "http://gettinggeneticsdone.blogspot.com/", "http://ggorjan.blogspot.com/", "http://jeromyanglim.blogspot.com/", 
+				"http://www.johnmyleswhite.com/", "http://learnr.wordpress.com/", "http://www.neilkodner.com/", "http://onertipaday.blogspot.com/", 
+				"http://pleasescoopme.com/", "http://quantivity.wordpress.com/",  
+				"http://www.r-statistics.com/", "http://realizationsinbiostatistics.blogspot.com/", "http://romainfrancois.blog.free.fr/", 
+				"http://jackman.stanford.edu/blog", "http://www.johndcook.com/blog", "http://blog.revolution-computing.com/", 
+				"http://dirk.eddelbuettel.com/blog", "http://www.stat.columbia.edu/~cook/movabletype/mlm/", "http://ryouready.wordpress.com/", "http://statsravingmad.wordpress.com/", "http://www.greghirson.com/blog"))
+colnames(blog.list) <- c("Blog Name", "URL")
+require(xtable)
+xtable(blog.list, caption = "Partial List of Active Blogs Using R", label = "tab:one", table.placement = "tbp", caption.placement = "top")
+@
+
+There are also two R blog aggregators (i.e. which pull from a number of different blogs: Planet R (http://planetr.stderr.org/) and R bloggers (http://www.r-bloggers.com/).
+
+\section{Literate Programming and Online Reproducible Research}
+
+One of the major uses of {\tt R}, especially given it's integration with \LaTeX{}, is the ultimate goal of "reproducible research".  
+This subject has been covered most extensively by ... and ...  Ultimately, a research paper should be completely reproducible
+including both the software and data.   
+
+Donald E. Knuth: "Instead of imagining that our
+main task is to instruct a computer what to do, let us
+concentrate rather on explaining to human beings what
+we want a computer to do."
+http://www.literateprogramming.com/knuthweb.pdf
+
+"One line of processing is called weaving the
+web; it produces a document that describes the program
+clearly and that facilitates program maintenance.
+The other line of processing is called tangling the web;
+it produces a machine-executable program."
+
+%http://reproducibleresearch.net/
+
+\subsection{LaTeX}
+
+http://stackoverflow.com/questions/270121/best-latex-editor-for-windows
+
+Mention miktex
+
+\subsection{Sweave}
+
+%Wikipedia:
+
+Sweave is a function in the statistical programming language R that enables integration of R code into LaTeX or LyX documents. The purpose is "to create dynamic reports, which can be updated automatically if data or analysis change".[1]
+The data analysis is performed at the moment of writing the report, or more exactly, at the moment of compiling the Sweave code with Sweave (i.e., essentially with R) and subsequently with LaTeX. This can facilitate the creation of up-to-date reports for the author.
+Because the Sweave files together with any external R files that might be sourced from them and the data files contain all the information necessary to trace back all steps of the data analyses, Sweave also has the potential to make research more transparent and reproducible to others[citation needed]. However, this is only the case to the extent that the author makes the data and the R and Sweave code available. If the author only publishes the resulting PDF document or printed versions thereof, a report created using Sweave is no more transparent or reproducible than the same report created with other statistical and text preparation software.
+
+%^ Leisch F (2002). "Sweave, Part I: Mixing R and LaTeX: A short introduction to the Sweave file format and corresponding R functions". R News 2 (3): 28-31.
+
+cran.r-project.org/web/packages/pgfSweave/
+http://cran.r-project.org/web/packages/cacheSweave/
+http://cran.r-project.org/web/packages/tikzDevice/
+cran.r-project.org/web/packages/odfWeave
+http://cran.r-project.org/contrib/extra/lyx/
+http://www.lyx.org/
+http://texlipse.sourceforge.net/
+
 \section{Using the {\tt blogR} package}
-  
+
+blogR follows a simple workflow:
+
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex'];
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em];
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [block] (init) {initialize model};
+    \node [cloud, left of=init] (expert) {expert};
+    \node [cloud, right of=init] (system) {system};
+    \node [block, below of=init] (identify) {identify candidate models};
+    \node [block, below of=identify] (evaluate) {evaluate candidate models};
+    \node [block, left of=evaluate, node distance=3cm] (update) {update model};
+    \node [decision, below of=evaluate] (decide) {is best candidate better?};
+    \node [block, below of=decide, node distance=3cm] (stop) {stop};
+    % Draw edges
+    \path [line] (init) -- (identify);
+    \path [line] (identify) -- (evaluate);
+    \path [line] (evaluate) -- (decide);
+    \path [line] (decide) -| node [near start] {yes} (update);
+    \path [line] (update) |- (identify);
+    \path [line] (decide) -- node {no}(stop);
+    \path [line,dashed] (expert) -- (init);
+    \path [line,dashed] (system) -- (init);
+    \path [line,dashed] (system) |- (evaluate);
+\end{tikzpicture}
+
+The blogR package uses XML-RPC to post blog entries (and associated media) onto supported blog sites.
+
+<<echo=TRUE,print=TRUE,results=hide>>=
+1 + 1
+1 + pi
+sin(pi/2)
+@  
+
+\subsection{Configuration}
+
+\texttt{blogR} can use a number of environmental varaibles to simplify its ongoing usage (see subsequent section on "simplified workflow").
+
+configure.blogR
+
+
+<<label=tab1,echo=FALSE,results=tex>>=
+blog.list <- data.frame(c("blogR.FILE", "blogR.PATH", "blogR.URL", "blogR.USERNAME", "blogR.PASSWORD", 
+				"blogR.ARCHIVE", "blogR.PUBLISH", "blogR.FORMAT"), 
+		c("The file name for the blog post (a valid Sweave file with extension .Rnw)", 
+				"The path to the location of the blog post files.",
+				"The URL of the blog site.", 
+				"The username with write access for posting to the blog.", 
+				"(optional) The password for the supplied username.", 
+				"Logical value which determines whether blog posts are archived after being uploaded.", 	
+				"Logical value which determines whether blog posts are immediately published or kept as a draft.", 	
+				"Format of the blog file: can be 'ascii', 'latex', or 'html' (ascii is currently the only supported format)."))
+colnames(blog.list) <- c("Variable", "Definition")
+require(xtable)
+xtable(blog.list, caption = "blogR configuration variables", label = "tab:two", table.placement = "tbp", caption.placement = "top")
+@
+
+
+\subsection{Creating new blog posts}
+
+In--line \texttt{Sweave} expressions are created using \verb|\Sexpr|. Code chunks can be created with the noweb convention (using \verb|<<>>=|). The \LaTeX{} code chunk syntax is not currently supported.
+
+The post title should be contained in a comment at the top of the ascii file in the following format: \verb|% title=|
+
+An optional parameter will decide whether to update the users status on twitter using the twitteR package, includes a link to the new blog entry.
+
+\subsection{Adding media to a blog}
+
+% the following code is R-specific, as data(iris) will not run in Splus. 
+% Hence, we mark it as R code. 
+<<>>=
+data(iris)
+summary(iris)
+@ %def
+
+
+\begin{figure}[htbp]
+  \begin{center}
+<<fig=true>>=
+library(graphics)
+boxplot(Sepal.Length~Species, data=iris)
+@
+    \caption{Boxplot of sepal length grouped by species.}
+  \end{center}
+\end{figure}
+
+
+
+\section{A simplified workflow}
+
+{\tt blogR} can be used in an adhoc fashion as described above (with the new.post and new.media functions), or it can be used with a simplified workflow for repetitive blogging.
+
+Repetitive blogging is done by setting up global environment variables using the configure.blogR function.  
 
 \section{Conclusion}
 
+The goal of the {\tt blogR} package is to provide another means for reports from R, and particularly to improve further on R's goals for "reproducible research".
 
 \begin{thebibliography}{99}
 
@@ -37,8 +231,8 @@ ISBN 3-900051-07-0, URL http://www.R-project.org
 \emph{Rmetrics: Rmetrics - Financial Engineering and Computational Finance.}
 R package version 260.72. http://www.rmetrics.org
 
-\bibitem{Sweave} Portfolio \& Risk Advisory Group and Commerzbank Securities (2006):
-\emph{its: Irregular Time Series.} R package version 1.1.5.
+\bibitem{Sweave} Friedrich Leisch, \emph{Dynamic generation of statistical reports using literate data analysis.} Proceedings in Computational Statistics, pages 575-580. 
+Physika Verlag, Heidelberg, Germany, (2002). ISBN 3-7908-1517-9, URL http://www.stat.uni-muenchen.de/~leisch/Sweave 
 
 \end{thebibliography}
 
