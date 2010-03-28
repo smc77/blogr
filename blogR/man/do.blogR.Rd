@@ -3,10 +3,7 @@
 \title{Process and post the latest blog entry.}
 \description{Process and post the latest blog entry.}
 \details{Function to process and post a blog entry using all the global enties.}
-\value{boolean vector}
+\value{character The url for the posted entry.}
 \seealso{\code{\link{process.blog}}, \code{\link{post.blog}}}
+\author{Shane Conway \email{shane.conway@gmail.com}}
 \keyword{character}
-\arguments{\item{string}{input character vector}
-\item{pattern}{pattern to look for, as defined by a POSIX regular
-expression.  See the ``Extended Regular Expressions'' section of 
-\code{\link{regex}} for details.}}

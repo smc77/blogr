@@ -1,16 +1,12 @@
 \name{parse.blog.entry}
 \alias{parse.blog.entry}
-\title{Post a new blog entry along with associated media.}
-\usage{parse.blog.entry(blog.post, input.format, blogurl=blogR.URL,
-    path=blogR.PATH)}
-\description{Post a new blog entry along with associated media.}
-\details{Vectorised over \code{string}.  \code{pattern} should be a single pattern,
-i.e. a character vector of length one.}
-\value{boolean vector}
-\seealso{\code{\link{grepl}} which this function wraps}
-\keyword{character}
-\arguments{\item{blog.file}{the name of the Sweave file cotaining the blog entry}
-\item{pattern}{pattern to look for, as defined by a POSIX regular
-expression.  See the ``Extended Regular Expressions'' section of 
-\code{\link{regex}} for details.}}
-\examples{post.blog()}
+\title{Return the party totals from roll-call vote data...}
+\usage{parse.blog.entry(blog.post, input.format, blogurl=blogR.URL, path=blogR.PATH)}
+\description{Return the party totals from roll-call vote data}
+\details{\code{parse.blog.entry} fully parses the output from roll-call vote data and returns the results for a particular party as a list}
+\value{list of vote summary for supplied party}
+\keyword{data}
+\author{Shane Conway \email{shane.conway@gmail.com}}
+\seealso{\code{\link{post.blog}}}
+\arguments{\item{xml}{The xml returned from \code{getNYTCongress} with type="roll.call" (default)}
+\item{party}{Can by either "total", "independent", "democratic", or "republican".}}
