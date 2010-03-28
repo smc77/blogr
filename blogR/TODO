@@ -1,0 +1,7 @@
+
+ * Current just supports ascii Sweave input: would like to also accept latex and html
+
+ * Only tested on Wordpress.  Would like to support Blogger and Typepad.
+ 
+ * Add RUnit tests.  Should post to sample blog, confirm post with RCurl, and delete the post.
+ 

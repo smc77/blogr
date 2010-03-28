@@ -1,0 +1,21 @@
+ NEWS/ChangeLog for scagnostics
+--------------------------------
+
+0.2-4	(under development)
+
+
+0.2-3	2009-01-27
+    o	updated documentation, added examples
+
+
+0.2-2	2008-12-22
+    o	added scagnosticsOutliers() and scagnosticsExemplars()
+
+
+0.2-1	2008-12-03
+    o	initial version using original scagnostics Java code
+
+
+0.1	[scagnostics 0.1 was a different package mainained by Hadley
+	 Wickham based on the same work of Wilkinson et al. In order
+	 to not confuse the two package we didn't use version 0.1]
