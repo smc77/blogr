@@ -1,0 +1,45 @@
+%\VignetteIndexEntry{blogR: R for blogs}
+\documentclass[a4paper]{article}
+\usepackage[OT1]{fontenc}
+\usepackage{Sweave}
+\begin{document}
+
+\title{blogR: R for blogs}
+\author{Shane M. Conway}
+\date{October 10, 2009}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+The statistical language {\tt R}~\cite{R} offers several packages for report writing, including {\tt Sweave}~\cite{Sweave} and {\tt brew}~\cite{brew}.
+Many R users also post reports using blogs.  
+
+{\tt blogR} currently supports posting R results to Wordpress, with plans to ultimately support other blog engines including Google's Blogger.
+
+\section{Using the {\tt blogR} package}
+  
+
+\section{Conclusion}
+
+
+\begin{thebibliography}{99}
+
+
+\bibitem{R} R Development Core Team:
+\emph{R: A Language and Environment for Statistical Computing},
+R Foundation for Statistical Computing, Vienna, Austria.
+ISBN 3-900051-07-0, URL http://www.R-project.org
+
+\bibitem{brew} Diethelm Wuertz, many others and see the SOURCE file (2007):
+\emph{Rmetrics: Rmetrics - Financial Engineering and Computational Finance.}
+R package version 260.72. http://www.rmetrics.org
+
+\bibitem{Sweave} Portfolio \& Risk Advisory Group and Commerzbank Securities (2006):
+\emph{its: Irregular Time Series.} R package version 1.1.5.
+
+\end{thebibliography}
+
+\end{document}

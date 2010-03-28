@@ -1,0 +1,14 @@
+% setwd("C:\\R\\blogR\\inst\\examples\\") 
+\documentclass[a4paper]{article}
+\usepackage[OT1]{fontenc}
+\usepackage{Sweave}
+\begin{document}
+
+\title{Example blog entry}
+\author{sconway}
+
+\maketitle
+
+This was created with sweave.
+
+\end{document}

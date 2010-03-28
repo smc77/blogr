@@ -1,0 +1,24 @@
+% title=Test scores vs. maternal stats
+
+First we look at the data as a table.
+
+<<echo=FALSE>>=
+## Demonstrate xtable
+require(xtable)
+require(foreign)
+kidiq <- read.dta(file="http://www.stat.columbia.edu/~gelman/arm/examples/child.iq/kidiq.dta")
+colnames(kidiq) <- gsub("_",".",colnames(kidiq))
+print(xtable(head(kidiq)),type="html")
+@
+
+Then we plot a linear model of <i>score ~ whether the mother graduated high school + the mother's IQ</i>.
+
+<<fig=TRUE, echo=FALSE, width=4, height=4>>=
+fit.3 <- lm (kidiq$kid.score ~ kidiq$mom.hs + kidiq$mom.iq)
+colors <- ifelse (mom.hs==1, "black", "gray")
+plot (kidiq$mom.iq, kidiq$kid.score, xlab="Mother IQ score", ylab="Child test score", col=colors, pch=20)
+curve (cbind (1, 1, x) %*% coef(fit.3), add=TRUE, col="black")
+curve (cbind (1, 0, x) %*% coef(fit.3), add=TRUE, col="gray")
+@
+
+
