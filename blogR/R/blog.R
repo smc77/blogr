@@ -29,7 +29,7 @@
 #' }
 new.post <- function(blogurl=blogR.URL, username=blogR.USERNAME, password=blogR.PASSWORD, title, blog.post, publish=FALSE) {
 	wpp <- .jnew("BlogPoster") # create instance of class
-	output <- tryCatch(.jcall(wpp, "S", "xmlrpcNewPost", blogurl, username, password, title, blog.post, as.character(publish)), )
+	output <- tryCatch(.jcall(wpp, "S", "xmlrpcNewPost", blogurl, username, password, title, blog.post, as.character(publish)))
 	return(output)
 }
 
