@@ -1,4 +1,13 @@
-# roxygenize("c:/R/blogR/trunk/blogR/")
+#
+# blogR: An R package to post Sweave documents as blog entries.
+# author: Shane Conway <shane.conway@gmail.com>
+#
+# This is released under a GPL license.
+#
+# Documentation was created using roxygen:
+# roxygenize('blogR', roxygen.dir='blogR', copy.package=FALSE, unlink.target=FALSE)
+#
+###############################################################################
 
 #' Post a new blog entry.
 #'
