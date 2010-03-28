@@ -1,10 +1,8 @@
-\name{post.blog}
-\alias{post.blog}
+\name{parse.blog.entry}
+\alias{parse.blog.entry}
 \title{Post a new blog entry along with associated media.}
-\usage{post.blog(blog.file=blogR.FILE, username=blogR.USERNAME, password=if
-    (exists("blogR.PASSWORD")) blogR.PASSWORD,
-    publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL,
-    archive=blogR.ARCHIVE, input.format=blogR.FORMAT)}
+\usage{parse.blog.entry(blog.post, input.format, blogurl=blogR.URL,
+    path=blogR.PATH)}
 \description{Post a new blog entry along with associated media.}
 \details{Vectorised over \code{string}.  \code{pattern} should be a single pattern,
 i.e. a character vector of length one.}

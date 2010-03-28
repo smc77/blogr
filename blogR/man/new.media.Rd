@@ -1,11 +1,10 @@
-\name{post.blog}
-\alias{post.blog}
-\title{Post a new blog entry along with associated media.}
-\usage{post.blog(blog.file=blogR.FILE, username=blogR.USERNAME, password=if
-    (exists("blogR.PASSWORD")) blogR.PASSWORD,
-    publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL,
-    archive=blogR.ARCHIVE, input.format=blogR.FORMAT)}
-\description{Post a new blog entry along with associated media.}
+\name{new.media}
+\alias{new.media}
+\title{Post blog media (images).}
+\usage{new.media(blogurl=blogR.URL, username=blogR.USERNAME,
+    password=blogR.PASSWORD, filename=blogR.FILE, mimetype,
+    path=blogR.PATH)}
+\description{Post blog media (images).}
 \details{Vectorised over \code{string}.  \code{pattern} should be a single pattern,
 i.e. a character vector of length one.}
 \value{boolean vector}

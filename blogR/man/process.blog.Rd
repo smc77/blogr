@@ -1,11 +1,10 @@
-\name{post.blog}
-\alias{post.blog}
-\title{Post a new blog entry along with associated media.}
-\usage{post.blog(blog.file=blogR.FILE, username=blogR.USERNAME, password=if
-    (exists("blogR.PASSWORD")) blogR.PASSWORD,
-    publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL,
-    archive=blogR.ARCHIVE, input.format=blogR.FORMAT)}
-\description{Post a new blog entry along with associated media.}
+\name{process.blog}
+\alias{process.blog}
+\title{Process a blog post.}
+\usage{process.blog(post=true, blog.file=blogR.FILE, path=blogR.PATH,
+    archive=blogR.ARCHIVE, input.format=blogR.FORMAT,
+    create.script=blogR.RSCRIPT)}
+\description{Process a blog post.}
 \details{Vectorised over \code{string}.  \code{pattern} should be a single pattern,
 i.e. a character vector of length one.}
 \value{boolean vector}

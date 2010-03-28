@@ -24,9 +24,9 @@ LazyLoad: \tab yes\cr
 ~~ functions ~~
 }
 \author{
-Who wrote it
+Shane M. Conway
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Maintainer: Shane M. Conway <shane.conway@gmail.com>
 ~~ The author and/or maintainer of the package ~~
 }
 \references{
@@ -40,5 +40,5 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 ~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
 }
 \examples{
-~~ simple examples of the most important functions ~~
+
 }
