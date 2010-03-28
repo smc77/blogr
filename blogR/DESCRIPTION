@@ -4,8 +4,10 @@ Date: 2009-10-09
 Title: blogR
 Author: Shane Conway
 Maintainer: Shane Conway <shane.conway@gmail.com>
-Description: Converts various Sweave formats into blog posts (currently just supports ascii).
+Description: Converts various Sweave formats into blog posts (currently just supports
+    ascii).
 Depends: R (>= 2.7.0), rJava (>= 0.5-0), ascii
 SystemRequirements: Java (>= 5.0)
 License: GPL-3
-Packaged: 
+Packaged:
+Collate: 'blog.R' 'utils.R' 'zzz.R'
