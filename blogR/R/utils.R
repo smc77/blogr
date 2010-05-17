@@ -17,7 +17,7 @@ load.blogR <- function() {
 		rownames(x) <- variables
 		print(x)
 	} else {
-		print("blogR is not configured")
+		print("blogR is not configured with global variables")
 	}
 }
 

@@ -33,6 +33,31 @@ new.post <- function(blogurl=blogR.URL, username=blogR.USERNAME, password=blogR.
 	return(output)
 }
 
+#' Edit an existing blog entry.
+#'
+#' Edit an existing blog post.
+#'
+#' @param blogurl The URL for the blog (e.g. http://myblog.wordpress.com/) 
+#' @param postid The id for the post to be edited.
+#' @param username The username for posting.
+#' @param password Password for blog.
+#' @param title Title of the blog post.
+#' @param blog.post Full blog entry (can be html).
+#' @param publish Whether the entry should be published or kept as draft (default = FALSE).
+#' @return The url for the posted entry.
+#' @author Shane Conway \email{shane.conway@gmail.com}
+#' @seealso \code{\link{new.media}} 
+#' @keywords documentation
+#' @examples
+#' \dontrun{
+#' new.post()
+#' }
+edit.post <- function(blogurl=blogR.URL, postid, username=blogR.USERNAME, password=blogR.PASSWORD, title, blog.post, publish=FALSE) {
+	wpp <- .jnew("BlogPoster") # create instance of class
+	output <- tryCatch(.jcall(wpp, "S", "xmlrpcEditPost", blogurl, postid, username, password, title, blog.post, as.character(publish)))
+	return(output)
+}
+
 #' Post blog media (e.g. images, files).
 #'
 #' Posts any media that's associated with a blog post.
@@ -119,7 +144,7 @@ process.blog <- function(post=true, blog.file=blogR.FILE, path=blogR.PATH, archi
 #' @keywords data
 #' @author Shane Conway \email{shane.conway@@gmail.com}
 #' @seealso \code{\link{post.blog}} 
-parse.blog.entry <- function(blog.post, input.format, blogurl=blogR.URL, path=blogR.PATH) {
+parse.blog.entry <- function(blog.post, input.format, blogurl=blogR.URL, username=blogR.USERNAME, password=blogR.PASSWORD, path=blogR.PATH) {
 	blog.data <- list()
 	if(input.format=="ascii") {
 		title.idx <- grep("title=", blog.post)
@@ -128,9 +153,9 @@ parse.blog.entry <- function(blog.post, input.format, blogurl=blogR.URL, path=bl
 		title <- strsplit(blog.post[title.idx],"title=")[[1]][2]
 		images <- gsub("\\[*.\\]","",gsub("image::","",blog.post[image.idx]))
 		blog.images <- do.call("rbind", 
-				lapply(images, function(image, blogurl, path) { 
-							new.media(blogurl=blogurl, filename=image, mimetype="image/jpg", path=path)
-						}, blogurl=blogurl, path=path))
+				lapply(images, function(image, blogurl, username, password, path) { 
+							new.media(blogurl=blogurl, username=username, password=password, filename=image, mimetype="image/jpg", path=path)
+						}, blogurl=blogurl, username=username, password=password, path=path))
 		blog.post[image.idx] <- paste("<img src='",blog.images,"' alt='R image'>", sep="")
 		blog.post <- paste(blog.post[-c(title.idx,comment.idx)], collapse = "\n") 
 		blog.data <- list(title=title, blog.post=blog.post, images=images)
@@ -154,18 +179,19 @@ parse.blog.entry <- function(blog.post, input.format, blogurl=blogR.URL, path=bl
 #' \dontrun{
 #' post.blog()
 #' }
-post.blog <- function(blog.file=blogR.FILE, username=blogR.USERNAME, password=if(exists("blogR.PASSWORD")) blogR.PASSWORD, publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL, archive=blogR.ARCHIVE, input.format=blogR.FORMAT) {
+post.blog <- function(blog.file=blogR.FILE, path=blogR.PATH, username=blogR.USERNAME, password=if(exists("blogR.PASSWORD")) blogR.PASSWORD, publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL, archive=blogR.ARCHIVE, input.format=blogR.FORMAT) {
+	print(path)
 	if(is.null("password"))
 		password <- readline("Please provide password: ")
 	#
 	ext <- if(input.format=="ascii") "txt"
 	blog.file <- gsub("Rnw",ext,blog.file)	
 	#
-	con <- file(blog.file, "r", blocking = FALSE)
+	con <- file(paste(path, blog.file, sep=""), "r", blocking = FALSE)
 	blog.post <- readLines(con)
 	close(con)
 	#
-	blog.data <- parse.blog.entry(blog.post=blog.post, input.format=input.format, blogurl=blogurl)
+	blog.data <- parse.blog.entry(blog.post=blog.post, input.format=input.format, blogurl=blogurl, username=username, password=password, path=path)
 	#
 	output <- new.post(blogurl=blogurl, username=username, password=password, title=blog.data$title, blog.post=blog.data$blog.post, publish=publish) 
 	#	

@@ -1,3 +1,3 @@
 import("rJava")
-export("new.post", "new.media", "do.blogR", "post.blog", "parse.blog.entry", "load.blogR")
+export("new.post", "edit.post", "new.media", "do.blogR", "post.blog", "parse.blog.entry", "process.blog", "load.blogR")
 

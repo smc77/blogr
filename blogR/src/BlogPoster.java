@@ -2,6 +2,7 @@
 
 import org.apache.xmlrpc.Base64;
 import org.apache.xmlrpc.XmlRpcClient;
+import org.apache.xmlrpc.XmlRpcException;
 
 import java.io.*;
 
@@ -59,12 +60,49 @@ public class BlogPoster {
 			String description, String bPublish)
 	throws Exception
 	{
+		String postid = new String("unknown");
+		
+		try {
+			url = url + "xmlrpc.php?";
+			final XmlRpcClient xmlrpc = new XmlRpcClient(url);
+			final Vector params = new Vector(0);
+	
+			String blogID = "1";
+			params.add(blogID);
+			params.add(login);
+			params.add(password);
+	
+			final Hashtable blogEntry = new Hashtable(0);
+			blogEntry.put("title", title);
+			blogEntry.put("description", description);
+			params.add(blogEntry);
+	
+			// Set the publish flag
+			params.add(Boolean.valueOf(false));
+			postid = (String) xmlrpc.execute("metaWeblog.newPost", params);
+		} catch (XmlRpcException xex) {
+			System.out.println("XmlRpc exception:");
+			System.out.println(xex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return (postid);
+
+	}
+
+	/**
+	 *
+	 */
+	public static String xmlrpcEditPost(String url, String postid, String login, String password, String title,
+			String description, String bPublish)
+	throws Exception
+	{
 		url = url + "xmlrpc.php?";
 		final XmlRpcClient xmlrpc = new XmlRpcClient(url);
 		final Vector params = new Vector(0);
 
-		String blogID = "1";
-		params.add(blogID);
+		params.add(postid);
 		params.add(login);
 		params.add(password);
 
@@ -76,7 +114,7 @@ public class BlogPoster {
 		// Set the publish flag
 		params.add(Boolean.valueOf(false));
 
-		return ((String) xmlrpc.execute("metaWeblog.newPost", params));
+		return ((String) xmlrpc.execute("metaWeblog.editPost", params));
 
 	}
 
@@ -85,8 +123,8 @@ public class BlogPoster {
 		String output = null;
 		try {
 			// put function here
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		System.out.println(output);
 	}
