@@ -66,7 +66,10 @@ blog.list <- data.frame(c("Antrhospace", "Biogistic Reflections", "Cengel's Favo
 				"http://dirk.eddelbuettel.com/blog", "http://www.stat.columbia.edu/~cook/movabletype/mlm/", "http://ryouready.wordpress.com/", "http://statsravingmad.wordpress.com/", "http://www.greghirson.com/blog"))
 colnames(blog.list) <- c("Blog Name", "URL")
 require(xtable)
-xtable(blog.list, caption = "Partial List of Active Blogs Using R", label = "tab:one", table.placement = "tbp", caption.placement = "top")
+xtable(blog.list, align = c("l", "p{2in}", "p{2in}"))
+#x <- xtable(blog.list, caption = "Partial List of Active Blogs Using R", label = "tab:one", table.placement = "tbp", caption.placement = "top") #, align="p{3cm}p{3cm}p{3cm}")
+#align(x) <- c('l', '>{\\centering}p{1.5cm}', 'c')
+#x
 @
 
 There are also two R blog aggregators (i.e. which pull from a number of different blogs: Planet R (http://planetr.stderr.org/) and R bloggers (http://www.r-bloggers.com/).
@@ -121,15 +124,13 @@ blogR follows a simple workflow:
 
 % Define block styles
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
-\tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=20em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, -latex'];
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em];
     
 \begin{tikzpicture}[node distance = 2cm, auto]
     % Place nodes
-    \node [block] (init) {initialize model};
-    \node [cloud, left of=init] (expert) {expert};
-    \node [cloud, right of=init] (system) {system};
+    \node [block] (init) {Process sweave document process.blog()};
     \node [block, below of=init] (identify) {identify candidate models};
     \node [block, below of=identify] (evaluate) {evaluate candidate models};
     \node [block, left of=evaluate, node distance=3cm] (update) {update model};
@@ -142,25 +143,15 @@ blogR follows a simple workflow:
     \path [line] (decide) -| node [near start] {yes} (update);
     \path [line] (update) |- (identify);
     \path [line] (decide) -- node {no}(stop);
-    \path [line,dashed] (expert) -- (init);
-    \path [line,dashed] (system) -- (init);
-    \path [line,dashed] (system) |- (evaluate);
 \end{tikzpicture}
 
 The blogR package uses XML-RPC to post blog entries (and associated media) onto supported blog sites.
 
-<<echo=TRUE,print=TRUE,results=hide>>=
-1 + 1
-1 + pi
-sin(pi/2)
-@  
-
 \subsection{Configuration}
 
-\texttt{blogR} can use a number of environmental varaibles to simplify its ongoing usage (see subsequent section on "simplified workflow").
-
-configure.blogR
-
+\texttt{blogR} needs a certain amount of information about the blog on an ongoing basis.  This can be supplied manually to each function, or you 
+can use a number of environmental varaibles to simplify its ongoing usage (see subsequent section on "simplified workflow").  Of these, only the blog 
+password is completely optional, in the sense that the package will prompt you for this if it isn't supplied.  Every other parameter is required.
 
 <<label=tab1,echo=FALSE,results=tex>>=
 blog.list <- data.frame(c("blogR.FILE", "blogR.PATH", "blogR.URL", "blogR.USERNAME", "blogR.PASSWORD", 
@@ -175,9 +166,8 @@ blog.list <- data.frame(c("blogR.FILE", "blogR.PATH", "blogR.URL", "blogR.USERNA
 				"Format of the blog file: can be 'ascii', 'latex', or 'html' (ascii is currently the only supported format)."))
 colnames(blog.list) <- c("Variable", "Definition")
 require(xtable)
-xtable(blog.list, caption = "blogR configuration variables", label = "tab:two", table.placement = "tbp", caption.placement = "top")
+xtable(blog.list, align = c("l", "p{2in}", "p{2in}"), caption = "blogR configuration variables", label = "tab:two")
 @
-
 
 \subsection{Creating new blog posts}
 
