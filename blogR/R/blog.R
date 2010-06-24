@@ -25,7 +25,7 @@
 #' @keywords documentation
 #' @examples
 #' \dontrun{
-#' new.post()
+#' new.post(title="foo", blog.post="bar")
 #' }
 new.post <- function(blogurl=blogR.URL, username=blogR.USERNAME, password=blogR.PASSWORD, title, blog.post, publish=FALSE) {
 	wpp <- .jnew("BlogPoster") # create instance of class
@@ -50,7 +50,7 @@ new.post <- function(blogurl=blogR.URL, username=blogR.USERNAME, password=blogR.
 #' @keywords documentation
 #' @examples
 #' \dontrun{
-#' new.post()
+#' edit.post(postid=111, title="foo", blog.post="bar")
 #' }
 edit.post <- function(blogurl=blogR.URL, postid, username=blogR.USERNAME, password=blogR.PASSWORD, title, blog.post, publish=FALSE) {
 	wpp <- .jnew("BlogPoster") # create instance of class
