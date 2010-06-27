@@ -179,7 +179,7 @@ parse.blog.entry <- function(blog.post, input.format, blogurl=blogR.URL, usernam
 #' \dontrun{
 #' post.blog()
 #' }
-post.blog <- function(blog.file=blogR.FILE, path=blogR.PATH, username=blogR.USERNAME, password=if(exists("blogR.PASSWORD")) blogR.PASSWORD, publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL, archive=blogR.ARCHIVE, input.format=blogR.FORMAT) {
+post.blog <- function(blog.file=blogR.FILE, postid=NA, path=blogR.PATH, username=blogR.USERNAME, password=if(exists("blogR.PASSWORD")) blogR.PASSWORD, publish=as.logical(blogR.PUBLISH), blogurl=blogR.URL, archive=blogR.ARCHIVE, input.format=blogR.FORMAT) {
 	print(path)
 	if(is.null("password"))
 		password <- readline("Please provide password: ")
@@ -193,7 +193,11 @@ post.blog <- function(blog.file=blogR.FILE, path=blogR.PATH, username=blogR.USER
 	#
 	blog.data <- parse.blog.entry(blog.post=blog.post, input.format=input.format, blogurl=blogurl, username=username, password=password, path=path)
 	#
-	output <- new.post(blogurl=blogurl, username=username, password=password, title=blog.data$title, blog.post=blog.data$blog.post, publish=publish) 
+	if(is.na(postid)) {
+		output <- new.post(blogurl=blogurl, username=username, password=password, title=blog.data$title, blog.post=blog.data$blog.post, publish=publish)
+	} else {
+		output <- edit.post(blogurl=blogurl, postid=postid, username=username, password=password, title=blog.data$title, blog.post=blog.data$blog.post, publish=publish)
+	}
 	#	
 	return(paste("", blogurl, "?p=", output, if(!publish) "&preview=true", sep=""))
 }
